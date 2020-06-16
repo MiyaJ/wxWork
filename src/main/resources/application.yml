@@ -41,3 +41,10 @@ mybatis-plus:
     jdbc-type-for-null: null
   global-config:
     banner: false
+
+# 企业微信配置
+qywx:
+  # 企业ID
+  corpid: wwc5057e76805fa8ac
+  # 审批应用 secret
+  approval-corpsecret: LSyEMX6zvBMbHavKEdYdkBWg-qNQec6wE_2zkxu_knM
