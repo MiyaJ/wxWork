@@ -36,7 +36,7 @@ spring:
 # mybatis mplus ≈‰÷√
 mybatis-plus:
   type-aliases-package: com.ezhiyang.approval.entity
-  mapper-locations: classpath:mapper/*.xml
+  mapper-locations: classpath:mapper/**/.xml
   configuration:
     jdbc-type-for-null: null
   global-config:

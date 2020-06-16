@@ -66,7 +66,7 @@ public class CodeGenerator {
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setModuleName(scanner("模块"));
-        pc.setParent("com.miya");
+        pc.setParent("com.ezhiyang");
         mpg.setPackageInfo(pc);
 
         // 自定义配置
