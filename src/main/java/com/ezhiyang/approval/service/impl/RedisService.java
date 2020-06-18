@@ -2,7 +2,9 @@ package com.ezhiyang.approval.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -15,9 +17,10 @@ import java.util.concurrent.TimeUnit;
  * @Description redis 缓存
  * @createTime 2020年05月13日 15:47:00
  */
+@Service
 public class RedisService {
 
-    @Autowired
+    @Resource
     private RedisTemplate<String, Object> redisTemplate;
 
     /**

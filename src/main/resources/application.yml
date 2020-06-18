@@ -31,9 +31,8 @@ spring:
           password: root
           driver-class-name: com.mysql.cj.jdbc.Driver
           url: jdbc:mysql://localhost:3306/approval?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8
-      p6spy: true # 开启控制台sql 打印
+      p6spy: true
 
-# mybatis mplus 配置
 mybatis-plus:
   type-aliases-package: com.ezhiyang.approval.entity
   mapper-locations: classpath:mapper/**/.xml
@@ -42,9 +41,6 @@ mybatis-plus:
   global-config:
     banner: false
 
-# 企业微信配置
 qywx:
-  # 企业ID
   corpid: wwc5057e76805fa8ac
-  # 审批应用 secret
   approval-corpsecret: LSyEMX6zvBMbHavKEdYdkBWg-qNQec6wE_2zkxu_knM
