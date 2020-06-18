@@ -84,7 +84,7 @@ public class OkHttpClientUtil {
      * @param
      * @updateTime 2020/6/18 12:41
      */
-    public static String doPost(String url, Map<String, String> headers, Map<String, String> params) {
+    public static String doPost(String url, Map<String, String> headers, Map<String, Object> params) {
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(10L, TimeUnit.SECONDS)
                 .build();

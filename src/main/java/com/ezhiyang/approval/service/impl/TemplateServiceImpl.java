@@ -33,7 +33,7 @@ public class TemplateServiceImpl extends ServiceImpl<TemplateMapper, Template> i
     public JSONObject getTemplateDetail(String templateId) {
 
         String url = "https://qyapi.weixin.qq.com/cgi-bin/oa/gettemplatedetail?access_token=" + qywxService.getToken();
-        Map<String, String> params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
         params.put("template_id", templateId);
         String result = OkHttpClientUtil.doPost(url, null, params);
         return JSONUtil.parseObj(result);

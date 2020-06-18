@@ -1,12 +1,13 @@
 package com.ezhiyang.approval.controller;
 
+
+import com.alibaba.fastjson.JSONObject;
 import com.ezhiyang.approval.common.Result;
 import com.ezhiyang.approval.service.IQywxService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * @author Caixiaowei
@@ -24,5 +25,12 @@ public class TestController {
     @GetMapping("/getAccessToken")
     public Result getAccessToken() {
         return Result.successOfData(qywxService.getToken());
+    }
+
+    @PostMapping("/applyEvent")
+    public Result applyEvent(@RequestBody Map<String, Object> params) {
+
+        JSONObject jsonObject = qywxService.applyEvent(params);
+        return Result.sucessOfData("sucess", jsonObject);
     }
 }

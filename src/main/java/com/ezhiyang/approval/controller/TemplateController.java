@@ -39,8 +39,4 @@ public class TemplateController {
         return Result.successOfData(templateService.getTemplateDetail(templateId));
     }
 
-    @PostMapping("/applyEvent")
-    public Result applyEvent() {
-        return Result.sucess();
-    }
 }

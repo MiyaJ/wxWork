@@ -1,5 +1,10 @@
 package com.ezhiyang.approval.service;
 
+
+import com.alibaba.fastjson.JSONObject;
+
+import java.util.Map;
+
 /**
  * @author Caixiaowei
  * @ClassName IQywxService.java
@@ -16,4 +21,14 @@ public interface IQywxService {
      * @return String
      */
     String getToken();
+
+    /**
+     * @title 审批申请
+     * @description
+     * @author Caixiaowei
+     * @param
+     * @updateTime 2020/6/18 17:27
+     */
+    JSONObject applyEvent(Map<String, Object> params);
+
 }
