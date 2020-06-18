@@ -1,6 +1,7 @@
 package com.ezhiyang.approval.util;
 
 import cn.hutool.json.JSONUtil;
+import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import org.apache.commons.lang3.StringUtils;
@@ -95,8 +96,9 @@ public class OkHttpClientUtil {
                 requestBuilder.addHeader(key, headers.get(key));
             }
         }
-        MediaType mediaType = MediaType.parse("application/json");
-        RequestBody body = RequestBody.create(JSONUtil.toJsonStr(params), mediaType);
+        MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
+        String json = new Gson().toJson(params);
+        RequestBody body = RequestBody.create(json, mediaType);
         Request request = requestBuilder
                 .url(url)
                 .post(body)

@@ -1,5 +1,6 @@
 package com.ezhiyang.approval.controller;
 
+import com.ezhiyang.approval.common.Result;
 import com.ezhiyang.approval.service.IQywxService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,14 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/test")
 public class TestController {
 
-    @Value("${qywx.approval-corpsecret}")
-    private String SECRET;
-
     @Autowired
     private IQywxService qywxService;
 
     @GetMapping("/getAccessToken")
-    public Object getAccessToken() {
-        return qywxService.getToken(SECRET);
+    public Result getAccessToken() {
+        return Result.successOfData(qywxService.getToken());
     }
 }
