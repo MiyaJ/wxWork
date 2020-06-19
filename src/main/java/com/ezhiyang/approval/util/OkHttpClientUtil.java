@@ -1,6 +1,7 @@
 package com.ezhiyang.approval.util;
 
 import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
@@ -98,6 +99,44 @@ public class OkHttpClientUtil {
         }
         MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
         String json = new Gson().toJson(params);
+        RequestBody body = RequestBody.create(json, mediaType);
+        Request request = requestBuilder
+                .url(url)
+                .post(body)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("cache-control", "no-cache")
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            String str = response.body().string();
+            return StringUtils.isNotBlank(str) ? str : StringUtils.EMPTY;
+        } catch (IOException e) {
+            log.error("url --->get --->exception: {}", e);
+        }
+        return StringUtils.EMPTY;
+    }
+
+    /**
+     * @title 同步post 请求
+     * @description
+     * @author Caixiaowei
+     * @param
+     * @updateTime 2020/6/18 12:41
+     */
+    public static String doPost(String url, Map<String, String> headers, JSONObject params) {
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(10L, TimeUnit.SECONDS)
+                .build();
+        Request.Builder requestBuilder = new Request.Builder();
+        if (!CollectionUtils.isEmpty(headers)) {
+            Iterator iterator = headers.keySet().iterator();
+            while (iterator.hasNext()) {
+                String key = (String) iterator.next();
+                requestBuilder.addHeader(key, headers.get(key));
+            }
+        }
+        MediaType mediaType = MediaType.parse("application/json; charset=utf-8");
+        String json = params.toJSONString();
         RequestBody body = RequestBody.create(json, mediaType);
         Request request = requestBuilder
                 .url(url)

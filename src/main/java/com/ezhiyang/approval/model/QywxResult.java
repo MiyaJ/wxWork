@@ -1,4 +1,4 @@
-package com.ezhiyang.approval.common;
+package com.ezhiyang.approval.model;
 
 /**
  * @author Caixiaowei

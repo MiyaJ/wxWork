@@ -2,7 +2,9 @@ package com.ezhiyang.approval.controller;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.ezhiyang.approval.common.Result;
+import com.ezhiyang.approval.model.Result;
+import com.ezhiyang.approval.model.msg.BaseMsg;
+import com.ezhiyang.approval.model.msg.TextMsg;
 import com.ezhiyang.approval.service.IQywxService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,5 +34,10 @@ public class TestController {
 
         JSONObject jsonObject = qywxService.applyEvent(params);
         return Result.sucessOfData("sucess", jsonObject);
+    }
+
+    @PostMapping("/sendMsg")
+    public Result sendMsg(@RequestBody JSONObject msg) {
+        return Result.successOfData(qywxService.sendMsg(msg));
     }
 }

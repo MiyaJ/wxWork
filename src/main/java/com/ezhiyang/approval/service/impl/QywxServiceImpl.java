@@ -3,7 +3,12 @@ package com.ezhiyang.approval.service.impl;
 import cn.hutool.core.map.MapUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.ezhiyang.approval.common.RedisConstans;
+import com.ezhiyang.approval.common.enums.MsgTypeEnum;
 import com.ezhiyang.approval.entity.ApplyLog;
+import com.ezhiyang.approval.model.msg.BaseMsg;
+import com.ezhiyang.approval.model.msg.ImageMsg;
+import com.ezhiyang.approval.model.msg.MsgVO;
+import com.ezhiyang.approval.model.msg.TextMsg;
 import com.ezhiyang.approval.service.IApplyLogService;
 import com.ezhiyang.approval.service.IQywxService;
 import com.ezhiyang.approval.util.OkHttpClientUtil;
@@ -29,7 +34,9 @@ public class QywxServiceImpl implements IQywxService {
     @Value("${qywx.corpid}")
     private String CORPID;
     @Value("${qywx.approval-corpsecret}")
-    private String SECRET;
+    private String APPROVAL_SECRET;
+    @Value("${qywx.msg-corpsecret}")
+    private String MSG_SECRET;
 
     private String ACCESS_TOKEN_URL = "https://qyapi.weixin.qq.com/cgi-bin/gettoken";
 
@@ -49,7 +56,7 @@ public class QywxServiceImpl implements IQywxService {
         if (StringUtils.isBlank(accessToken) || "null".equalsIgnoreCase(accessToken)) {
             Map<String, String> params = MapUtil.newHashMap();
             params.put("corpid", this.CORPID);
-            params.put("corpsecret", this.SECRET);
+            params.put("corpsecret", this.MSG_SECRET);
             try {
                 String result = OkHttpClientUtil.doGet(ACCESS_TOKEN_URL, null, params);
                 JSONObject json = JSONObject.parseObject(result);
@@ -94,5 +101,50 @@ public class QywxServiceImpl implements IQywxService {
         return wxResult;
     }
 
+    /**
+     * @param msg
+     * @title 发送消息
+     * @description
+     * @author Caixiaowei
+     * @updateTime 2020/6/19 11:00
+     */
+    @Override
+    public MsgVO sendMsg(JSONObject msg) {
+        String url = "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=" + getToken();
 
+        log.info("sendMsg --->{}", msg.toJSONString());
+        String resultStr = OkHttpClientUtil.doPost(url, null, msg);
+        log.info("resultStr ---》 data : {}", resultStr);
+        MsgVO msgVO = JSONObject.parseObject(resultStr, MsgVO.class);
+
+        return msgVO;
+    }
+
+    /**
+     * @param msg TextMsg 文本消息对象
+     * @title fasong 文本消息
+     * @description
+     * @author Caixiaowei
+     * @updateTime 2020/6/19 15:26
+     */
+    @Override
+    public MsgVO sendTextMsg(TextMsg msg) {
+        JSONObject data = (JSONObject) JSONObject.toJSON(msg);
+        MsgVO msgVO = this.sendMsg(data);
+        return msgVO;
+    }
+
+    /**
+     * @param msg ImageMsg 图片消息对象
+     * @title 发送图片消息
+     * @description
+     * @author Caixiaowei
+     * @updateTime 2020/6/19 15:49
+     */
+    @Override
+    public MsgVO sendImage(ImageMsg msg) {
+        JSONObject data = (JSONObject) JSONObject.toJSON(msg);
+        MsgVO msgVO = this.sendMsg(data);
+        return msgVO;
+    }
 }

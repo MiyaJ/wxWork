@@ -2,6 +2,10 @@ package com.ezhiyang.approval.service;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.ezhiyang.approval.model.msg.BaseMsg;
+import com.ezhiyang.approval.model.msg.ImageMsg;
+import com.ezhiyang.approval.model.msg.MsgVO;
+import com.ezhiyang.approval.model.msg.TextMsg;
 
 import java.util.Map;
 
@@ -31,4 +35,30 @@ public interface IQywxService {
      */
     JSONObject applyEvent(Map<String, Object> params);
 
+    /**
+     * @title 发送消息
+     * @description
+     * @author Caixiaowei
+     * @param
+     * @updateTime 2020/6/19 11:00
+     */
+    MsgVO sendMsg(JSONObject msg);
+
+    /**
+     * @title fasong 文本消息
+     * @description
+     * @author Caixiaowei
+     * @param msg TextMsg 文本消息对象
+     * @updateTime 2020/6/19 15:26
+     */
+    MsgVO sendTextMsg(TextMsg msg);
+
+    /**
+     * @title 发送图片消息
+     * @description 
+     * @author Caixiaowei
+     * @param msg ImageMsg 图片消息对象
+     * @updateTime 2020/6/19 15:49 
+     */
+    MsgVO sendImage(ImageMsg msg);
 }

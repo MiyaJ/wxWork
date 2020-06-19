@@ -1,12 +1,11 @@
 package com.ezhiyang.approval.controller;
 
 
-import com.ezhiyang.approval.common.Result;
+import com.ezhiyang.approval.model.Result;
 import com.ezhiyang.approval.entity.Template;
 import com.ezhiyang.approval.service.ITemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
