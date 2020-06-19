@@ -5,10 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.ezhiyang.approval.common.RedisConstans;
 import com.ezhiyang.approval.common.enums.MsgTypeEnum;
 import com.ezhiyang.approval.entity.ApplyLog;
-import com.ezhiyang.approval.model.msg.BaseMsg;
-import com.ezhiyang.approval.model.msg.ImageMsg;
-import com.ezhiyang.approval.model.msg.MsgVO;
-import com.ezhiyang.approval.model.msg.TextMsg;
+import com.ezhiyang.approval.model.msg.*;
 import com.ezhiyang.approval.service.IApplyLogService;
 import com.ezhiyang.approval.service.IQywxService;
 import com.ezhiyang.approval.util.OkHttpClientUtil;
@@ -143,6 +140,20 @@ public class QywxServiceImpl implements IQywxService {
      */
     @Override
     public MsgVO sendImage(ImageMsg msg) {
+        JSONObject data = (JSONObject) JSONObject.toJSON(msg);
+        MsgVO msgVO = this.sendMsg(data);
+        return msgVO;
+    }
+
+    /**
+     * @param msg NewsMsg 图文消息对象
+     * @title 发送图文消息
+     * @description
+     * @author Caixiaowei
+     * @updateTime 2020/6/19 16:10
+     */
+    @Override
+    public MsgVO sendNews(NewsMsg msg) {
         JSONObject data = (JSONObject) JSONObject.toJSON(msg);
         MsgVO msgVO = this.sendMsg(data);
         return msgVO;
