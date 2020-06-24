@@ -12,5 +12,12 @@ public class RedisConstans {
     }
 
     public static final Long QYWX_ACCESS_TOKEN_EXPIRATION = 7200L;
-    public static final String QYWX_ACCESS_TOKEN_KEY = "qywx:access_token";
+    /**
+     * 审批应用接口token
+     */
+    public static final String QYWX_ACCESS_TOKEN_KEY_APPROVAL = "qywx:access_token:approval";
+    /**
+     * 审批应用接口token
+     */
+    public static final String QYWX_ACCESS_TOKEN_KEY_MESSAGE = "qywx:access_token:message";
 }

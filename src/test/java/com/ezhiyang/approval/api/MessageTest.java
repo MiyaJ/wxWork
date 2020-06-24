@@ -1,4 +1,4 @@
-package com.ezhiyang.approval;
+package com.ezhiyang.approval.api;
 
 import cn.hutool.core.date.DateUtil;
 import com.ezhiyang.approval.common.enums.MsgTypeEnum;
@@ -6,7 +6,8 @@ import com.ezhiyang.approval.model.msg.ImageMsg;
 import com.ezhiyang.approval.model.msg.MsgVO;
 import com.ezhiyang.approval.model.msg.NewsMsg;
 import com.ezhiyang.approval.model.msg.TextMsg;
-import com.ezhiyang.approval.service.IQywxService;
+import com.ezhiyang.approval.service.IApprovalService;
+import com.ezhiyang.approval.service.IMessageService;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
@@ -21,10 +22,10 @@ import org.springframework.util.Assert;
  * @createTime 2020年06月19日 15:19:00
  */
 @SpringBootTest
-public class MsgTest {
+public class MessageTest {
 
     @Autowired
-    private IQywxService qywxService;
+    private IMessageService messageService;
 
     /**
      * 发送文本消息
@@ -37,14 +38,14 @@ public class MsgTest {
         textMsg.setTotag(StringUtils.EMPTY);
         textMsg.setMsgtype(MsgTypeEnum.TEXT.getValue());
         textMsg.setAgentid(1000002);
-        textMsg.setText(new TextMsg.TextBean("经验+3  "+ DateUtil.now() + "  \n<a href=\"https://www.baidu.com" +
+        textMsg.setText(new TextMsg.TextBean("加薪~  "+ DateUtil.now() + "  \n<a href=\"https://www.baidu.com" +
                 ".com\">百度一下, 你就知道</a>"));
         textMsg.setSafe(0);
         textMsg.setEnable_id_trans(0);
         textMsg.setEnable_duplicate_check(0);
         textMsg.setDuplicate_check_interval(1800);
 
-        MsgVO msgVO = this.qywxService.sendTextMsg(textMsg);
+        MsgVO msgVO = this.messageService.sendTextMsg(textMsg);
         int errcode = msgVO.getErrcode();
         Assert.isTrue(0 == errcode, "发送失败.");
     }
@@ -65,7 +66,7 @@ public class MsgTest {
         imageMsg.setEnable_duplicate_check(0);
         imageMsg.setDuplicate_check_interval(1800);
 
-        MsgVO msgVO = this.qywxService.sendImage(imageMsg);
+        MsgVO msgVO = this.messageService.sendImage(imageMsg);
         int errcode = msgVO.getErrcode();
         Assert.isTrue(0 == errcode, "发送失败.");
     }
@@ -96,7 +97,7 @@ public class MsgTest {
         newsBean.setArticles(Lists.newArrayList(article));
 
         newsMsg.setNews(newsBean);
-        MsgVO msgVO = this.qywxService.sendNews(newsMsg);
+        MsgVO msgVO = this.messageService.sendNews(newsMsg);
         int errcode = msgVO.getErrcode();
         Assert.isTrue(0 == errcode, "发送失败.");
     }
