@@ -1,13 +1,18 @@
 package com.ezhiyang.approval.api;
 
 import cn.hutool.core.date.DateUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.ezhiyang.approval.common.enums.MsgTypeEnum;
+import com.ezhiyang.approval.model.dto.chat.GroupChatCreateDTO;
 import com.ezhiyang.approval.model.msg.ImageMsg;
 import com.ezhiyang.approval.model.msg.MsgVO;
 import com.ezhiyang.approval.model.msg.NewsMsg;
 import com.ezhiyang.approval.model.msg.TextMsg;
+import com.ezhiyang.approval.model.msg.group.TextChat;
 import com.ezhiyang.approval.service.IApprovalService;
 import com.ezhiyang.approval.service.IMessageService;
+import jdk.nashorn.internal.runtime.options.LoggingOption;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
@@ -22,6 +27,7 @@ import org.springframework.util.Assert;
  * @createTime 2020年06月19日 15:19:00
  */
 @SpringBootTest
+@Slf4j
 public class MessageTest {
 
     @Autowired
@@ -102,4 +108,43 @@ public class MessageTest {
         Assert.isTrue(0 == errcode, "发送失败.");
     }
 
+    /**
+     * 创建群聊
+     * @description
+     * @author Caixiaowei
+     * @param
+     * @updateTime 2020/6/28 15:42
+     * @return
+     */
+    @Test
+    public void test_createGroupChat(){
+        GroupChatCreateDTO dto = new GroupChatCreateDTO();
+        dto.setName("测试群1");
+        dto.setUserlist(Lists.newArrayList("cxw0615", "zcl0615"));
+        String chatid = this.messageService.createGroupChat(dto);
+        log.info("测试群1 : {}", chatid);
+    }
+    
+    /**
+     * 发送群聊文本信息
+     * @description 
+     * @author Caixiaowei
+     * @param
+     * @updateTime 2020/6/28 16:12 
+     * @return 
+     */
+    @Test
+    public void test_groupChat_text() {
+        String chatid = "wrDFYVCgAA-6fSrWUQnc5lmg4Oa8piIQ";
+
+        TextChat textChat = new TextChat();
+        textChat.setChatid(chatid);
+        textChat.setMsgtype("text");
+        textChat.setText(new TextChat.TextBean("@郑重林 涨薪升职"));
+        textChat.setSafe(0);
+
+        JSONObject data = (JSONObject) JSONObject.toJSON(textChat);
+        this.messageService.sendGroupChat(data);
+
+    }
 }

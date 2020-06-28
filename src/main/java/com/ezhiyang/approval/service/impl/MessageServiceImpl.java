@@ -2,17 +2,31 @@ package com.ezhiyang.approval.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ezhiyang.approval.common.RedisConstans;
+import com.ezhiyang.approval.entity.GroupChat;
+import com.ezhiyang.approval.entity.GroupChatUser;
+import com.ezhiyang.approval.model.dto.chat.GroupChatCreateDTO;
+import com.ezhiyang.approval.model.dto.chat.GroupChatUpdateDTO;
 import com.ezhiyang.approval.model.msg.ImageMsg;
 import com.ezhiyang.approval.model.msg.MsgVO;
 import com.ezhiyang.approval.model.msg.NewsMsg;
 import com.ezhiyang.approval.model.msg.TextMsg;
+import com.ezhiyang.approval.model.vo.ChatInfoVO;
+import com.ezhiyang.approval.service.IGroupChatService;
+import com.ezhiyang.approval.service.IGroupChatUserService;
 import com.ezhiyang.approval.service.IMessageService;
 import com.ezhiyang.approval.util.OkHttpClientUtil;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Caixiaowei
@@ -31,6 +45,10 @@ public class MessageServiceImpl extends WxWorkServiceImpl implements IMessageSer
 
     @Autowired
     private RedisService redisService;
+    @Autowired
+    private IGroupChatService groupChatService;
+    @Autowired
+    private IGroupChatUserService groupChatUserService;
 
     /**
      * @title 获取access_token
@@ -114,5 +132,125 @@ public class MessageServiceImpl extends WxWorkServiceImpl implements IMessageSer
         JSONObject data = (JSONObject) JSONObject.toJSON(msg);
         MsgVO msgVO = this.sendMsg(data);
         return msgVO;
+    }
+
+    /**
+     * 创建群聊
+     *
+     * @param groupChatCreateDTO
+     * @return chatid 群id
+     * @description
+     * @author Caixiaowei
+     * @updateTime 2020/6/28 14:30
+     */
+    @Override
+    public String createGroupChat(GroupChatCreateDTO groupChatCreateDTO) {
+        String url = "https://qyapi.weixin.qq.com/cgi-bin/appchat/create?access_token=" + getAccessToken();
+        List<String> userlist = groupChatCreateDTO.getUserlist();
+        if (CollectionUtils.isEmpty(userlist) || userlist.size() <2) {
+            log.error("群聊成员补鞥呢少于2个");
+            return StringUtils.EMPTY;
+        }
+        JSONObject data = (JSONObject) JSONObject.toJSON(groupChatCreateDTO);
+        String resultStr = OkHttpClientUtil.doPost(url, null, data);
+        JSONObject result = JSONObject.parseObject(resultStr);
+        if (result.getIntValue("errcode") == 0) {
+            String chatid = result.getString("chatid");
+
+            // db 群聊入库
+            GroupChat groupChat = new GroupChat();
+            groupChat.setChatid(chatid);
+            groupChat.setName(groupChatCreateDTO.getName());
+            groupChat.setOwner(groupChatCreateDTO.getOwner());
+            groupChat.setCreateTime(LocalDateTime.now());
+            groupChat.setUpdateTime(LocalDateTime.now());
+            this.groupChatService.save(groupChat);
+
+            // 聊成员入库
+            List<GroupChatUser> groupChatUserList = Lists.newArrayList();
+            for (String userid : userlist) {
+                GroupChatUser groupChatUser = new GroupChatUser();
+                groupChatUser.setChatid(chatid);
+                groupChatUser.setUserid(userid);
+
+                groupChatUserList.add(groupChatUser);
+            }
+            this.groupChatUserService.saveBatch(groupChatUserList);
+
+            return chatid;
+        } else {
+            log.error("创建群聊异常: {}", result.getString("errmsg"));
+        }
+        return null;
+    }
+
+    /**
+     * 修改群聊
+     *
+     * @param groupChatUpdateDTO
+     * @return
+     * @description
+     * @author Caixiaowei
+     * @updateTime 2020/6/28 15:20
+     */
+    @Override
+    public void updateGroupChat(GroupChatUpdateDTO groupChatUpdateDTO) {
+        String url = "https://qyapi.weixin.qq.com/cgi-bin/appchat/update?access_token=" + getAccessToken();
+        JSONObject data = (JSONObject) JSONObject.toJSON(groupChatUpdateDTO);
+        String resultStr = OkHttpClientUtil.doPost(url, null, data);
+        JSONObject result = JSONObject.parseObject(resultStr);
+        if (result.getIntValue("errcode") == 0) {
+            log.info("修改群聊 success");
+        } else {
+            log.error("修改群聊异常: {}", result.getString("errmsg"));
+        }
+    }
+
+    /**
+     * 获取群聊
+     *
+     * @param chatid 群聊id
+     * @return ChatInfoVO
+     * @description
+     * @author Caixiaowei
+     * @updateTime 2020/6/28 15:24
+     */
+    @Override
+    public ChatInfoVO getGroupChat(String chatid) {
+        String url = "https://qyapi.weixin.qq.com/cgi-bin/appchat/get?access_token=" + getAccessToken();
+        Map<String, String> params = Maps.newHashMap();
+        params.put("chatid", chatid);
+        String resultStr = null;
+        try {
+            resultStr = OkHttpClientUtil.doGet(url, null, params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("获取群聊异常: {}", resultStr);
+        }
+        JSONObject result = JSONObject.parseObject(resultStr);
+        if (result.getIntValue("errcode") == 0) {
+            String chatInfo = result.getString("chat_info");
+            return JSONObject.parseObject(chatInfo, ChatInfoVO.class);
+        } else {
+            log.error("获取群聊异常: {}", result.getString("errmsg"));
+        }
+        return new ChatInfoVO();
+    }
+
+    /**
+     * 发送群聊消息
+     *
+     * @param msg 消息体
+     * @return
+     * @description
+     * @author Caixiaowei
+     * @updateTime 2020/6/28 15:35
+     */
+    @Override
+    public void sendGroupChat(JSONObject msg) {
+        String url = "https://qyapi.weixin.qq.com/cgi-bin/appchat/send?access_token=" + getAccessToken();
+        String resultStr = OkHttpClientUtil.doPost(url, null, msg);
+        log.info("sendGroupChat : {}", resultStr);
+
     }
 }

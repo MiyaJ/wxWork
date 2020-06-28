@@ -56,7 +56,7 @@ public class CodeGenerator {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://localhost:3306/approval?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true" +
+        dsc.setUrl("jdbc:mysql://localhost:3306/wxwork?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true" +
                 "&zeroDateTimeBehavior=convertToNull&useSSL=false&allowMultiQueries=true&rewriteBatchedStatements=true&serverTimezone=GMT%2B8");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
         dsc.setUsername("root");

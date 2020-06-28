@@ -36,8 +36,6 @@ public class ApprovalServiceImpl extends WxWorkServiceImpl implements IApprovalS
 
     @Value("${qywx.approval-corpsecret}")
     private String APPROVAL_SECRET;
-    @Value("${qywx.msg-corpsecret}")
-    private String MSG_SECRET;
 
     @Autowired
     private RedisService redisService;
