@@ -30,12 +30,12 @@ public class TemplateController {
     @GetMapping("/templateList")
     public Result list() {
         List<Template> list = templateService.list();
-        return Result.successOfData(list);
+        return Result.success("查询模板成功", list);
     }
 
     @GetMapping("/getTemplateDetail")
     public Result getTemplateDetail(String templateId) {
-        return Result.successOfData(templateService.getTemplateDetail(templateId));
+        return Result.success("查询模板详情成功!", templateService.getTemplateDetail(templateId));
     }
 
 }

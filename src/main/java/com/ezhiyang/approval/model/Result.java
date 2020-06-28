@@ -24,7 +24,7 @@ public class Result<T> {
         this.message = message;
     }
 
-    public static Result sucess() {
+    public static Result success() {
         return new Result(0, "sucess");
     }
 
@@ -32,12 +32,8 @@ public class Result<T> {
         return new Result(0, message);
     }
 
-    public static Result sucessOfData(String message, Object data) {
+    public static Result success(String message, Object data) {
         return new Result(0, message, data);
-    }
-
-    public static Result successOfData(Object data) {
-        return new Result(0, "sucess", data);
     }
 
     public static Result error() {

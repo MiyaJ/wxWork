@@ -27,18 +27,18 @@ public class TestController {
 
     @GetMapping("/getAccessToken")
     public Result getAccessToken() {
-        return Result.successOfData(approvalService.getAccessToken());
+        return Result.success("success", approvalService.getAccessToken());
     }
 
     @PostMapping("/applyEvent")
     public Result applyEvent(@RequestBody Map<String, Object> params) {
 
         JSONObject jsonObject = approvalService.applyEvent(params);
-        return Result.sucessOfData("sucess", jsonObject);
+        return Result.success("success", jsonObject);
     }
 
     @PostMapping("/sendMsg")
     public Result sendMsg(@RequestBody JSONObject msg) {
-        return Result.successOfData(messageService.sendMsg(msg));
+        return Result.success("success", messageService.sendMsg(msg));
     }
 }
