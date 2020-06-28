@@ -9,7 +9,7 @@ import lombok.Data;
  * @createTime 2020年06月28日 16:42:00
  */
 @Data
-public class TextChat {
+public class TextChat extends BaseChat {
 
 
     /**
@@ -19,11 +19,7 @@ public class TextChat {
      * safe : 0
      */
 
-    private String chatid;
-    private String msgtype;
     private TextBean text;
-    private int safe;
-
 
     @Data
     public static class TextBean {
