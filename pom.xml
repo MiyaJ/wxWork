@@ -11,8 +11,8 @@
     <groupId>com.ezhiyang</groupId>
     <artifactId>approval</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>approval</name>
-    <description>approval server</description>
+    <name>wxWork</name>
+    <description>wxWork server</description>
 
     <properties>
         <java.version>1.8</java.version>
