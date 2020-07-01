@@ -66,7 +66,6 @@ public enum MsgTypeEnum implements IEnum<String> {
     TASKCARD("任务卡片消息", "taskcard");
 
 
-
     /**
      * 名称
      */

@@ -10,11 +10,12 @@ public interface IWxWorkService {
 
     /**
      * 获取应用接口token
-     * @description 
-     * @author Caixiaowei
+     *
      * @param corpsecret 应用的凭证密钥
-     * @updateTime 2020/6/24 16:37
      * @return String 接口凭证token
+     * @description
+     * @author Caixiaowei
+     * @updateTime 2020/6/24 16:37
      */
     String getAccessToken(String corpsecret);
 }

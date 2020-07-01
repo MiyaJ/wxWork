@@ -160,11 +160,12 @@ public class WxCryptUtil {
 
     /**
      * 消息加密和安全签名
+     *
+     * @param
+     * @return 加密后的可以直接回复用户的密文，包括msg_signature, timestamp, nonce, encrypt的xml格式的字符串
      * @description
      * @author Caixiaowei
-     * @param
      * @updateTime 2020/7/1 11:21
-     * @return 加密后的可以直接回复用户的密文，包括msg_signature, timestamp, nonce, encrypt的xml格式的字符串
      */
     public String encrypt(String plainText) {
         // 加密
@@ -180,14 +181,15 @@ public class WxCryptUtil {
 
     /**
      * 生成xml 消息
-     * @description
-     * @author Caixiaowei
+     *
      * @param encrypt   加密后的消息密文
      * @param signature 安全签名
      * @param timestamp 时间戳
      * @param nonce     随机字符串
-     * @updateTime 2020/7/1 11:20
      * @return 生成的xml字符串
+     * @description
+     * @author Caixiaowei
+     * @updateTime 2020/7/1 11:20
      */
     private static String generateXml(String encrypt, String signature, String timestamp, String nonce) {
         String format = "<xml>\n" + "<Encrypt><![CDATA[%1$s]]></Encrypt>\n"
@@ -199,12 +201,13 @@ public class WxCryptUtil {
 
     /**
      * 报文加密
-     * @description
-     * @author Caixiaowei
+     *
      * @param randomStr 随机字符串
      * @param plainText 需要加密的明文
-     * @updateTime 2020/7/1 11:17
      * @return String 加密后base64编码的字符串
+     * @description
+     * @author Caixiaowei
+     * @updateTime 2020/7/1 11:17
      */
     protected String encrypt(String randomStr, String plainText) {
         ByteGroup byteCollector = new ByteGroup();
@@ -245,11 +248,12 @@ public class WxCryptUtil {
 
     /**
      * 生成随机字符串
+     *
+     * @param
+     * @return String 随机字符串
      * @description
      * @author Caixiaowei
-     * @param
      * @updateTime 2020/7/1 11:19
-     * @return String 随机字符串
      */
     private static String genRandomStr() {
         String base = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -264,11 +268,12 @@ public class WxCryptUtil {
 
     /**
      * 将一个数字转换成生成4个字节的网络字节序bytes数组.
+     *
+     * @param number 待转换的数字
+     * @return byte[] 4个字节的网络字节序bytes数组.
      * @description
      * @author Caixiaowei
-     * @param number 待转换的数字
      * @updateTime 2020/7/1 11:16
-     * @return byte[] 4个字节的网络字节序bytes数组.
      */
     private static byte[] number2BytesInNetworkOrder(int number) {
         byte[] orderBytes = new byte[4];

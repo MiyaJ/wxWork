@@ -19,11 +19,11 @@ public class ImageMsg extends BaseMsg {
     private ImageBean image;
 
     public static class ImageBean {
-        
+
         public ImageBean() {
 
         }
-        
+
         public ImageBean(String media_id) {
             this.media_id = media_id;
         }

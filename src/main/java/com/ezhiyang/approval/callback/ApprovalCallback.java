@@ -23,7 +23,6 @@ public class ApprovalCallback {
     private String corpid;
 
 
-
     @RequestMapping("/approval/callback")
     public void callback(HttpServletRequest request, HttpServletResponse response) {
         // 加密签名
@@ -45,7 +44,9 @@ public class ApprovalCallback {
             xstream.processAnnotations(new Class[]{AppravalCallbackMessage.class, ApprovalInfo.class, ApprovalNode.class,
                     ApprovalNodeItem.class, ApprovalNotifyNode.class});
             //将字符串类型的xml转换为对象
-            AppravalCallbackMessage callbackMessage = (AppravalCallbackMessage)xstream.fromXML(msgXmlStr);
+            AppravalCallbackMessage callbackMessage = (AppravalCallbackMessage) xstream.fromXML(msgXmlStr);
+
+            // TODO: 2020/7/1 回调信息返回调用方: mq?
 
         } catch (Exception e) {
 

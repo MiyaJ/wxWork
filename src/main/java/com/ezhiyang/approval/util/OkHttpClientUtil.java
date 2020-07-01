@@ -43,10 +43,10 @@ public class OkHttpClientUtil {
 
 
     /**
+     * @param
      * @title 同步get 请求
      * @description
      * @author Caixiaowei
-     * @param
      * @updateTime 2020/6/18 12:47
      */
     public static String doGet(String url, Map<String, String> headers, Map<String, String> params) throws Exception {
@@ -79,10 +79,10 @@ public class OkHttpClientUtil {
     }
 
     /**
+     * @param
      * @title 同步post 请求
      * @description
      * @author Caixiaowei
-     * @param
      * @updateTime 2020/6/18 12:41
      */
     public static String doPost(String url, Map<String, String> headers, Map<String, Object> params) {
@@ -117,10 +117,10 @@ public class OkHttpClientUtil {
     }
 
     /**
+     * @param
      * @title 同步post 请求
      * @description
      * @author Caixiaowei
-     * @param
      * @updateTime 2020/6/18 12:41
      */
     public static String doPost(String url, Map<String, String> headers, JSONObject params) {
@@ -155,25 +155,25 @@ public class OkHttpClientUtil {
     }
 
     /**
+     * @param
      * @title map 转换为 string
      * @description
      * @author Caixiaowei
-     * @param
-     * @updateTime 2020/6/18 12:22 
+     * @updateTime 2020/6/18 12:22
      */
-    public static String mapToString(Map<String, String> params){
+    public static String mapToString(Map<String, String> params) {
         String sprlitStr = "&";
         String result = "";
         StringBuilder stringBuilder = new StringBuilder();
-        if(!CollectionUtils.isEmpty(params)){
-            List<String> entryList =  new ArrayList<>(params.keySet());
+        if (!CollectionUtils.isEmpty(params)) {
+            List<String> entryList = new ArrayList<>(params.keySet());
             Collections.sort(entryList);
-            for(String item:entryList){
+            for (String item : entryList) {
                 String value = params.get(item);
                 stringBuilder.append(item).append("=").append(value).append(sprlitStr);
             }
             result = stringBuilder.toString();
-            result = result.substring(0,stringBuilder.lastIndexOf(sprlitStr));
+            result = result.substring(0, stringBuilder.lastIndexOf(sprlitStr));
         }
         System.out.println("param str : " + result);
         return result;

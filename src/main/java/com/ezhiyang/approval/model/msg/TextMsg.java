@@ -9,7 +9,7 @@ import lombok.Data;
  * @createTime 2020年06月19日 11:03:00
  */
 @Data
-public class TextMsg extends BaseMsg{
+public class TextMsg extends BaseMsg {
     /**
      * touser : UserID1|UserID2|UserID3
      * toparty : PartyID1|PartyID2
@@ -37,7 +37,6 @@ public class TextMsg extends BaseMsg{
     private int enable_id_trans;
 
 
-
     public static class TextBean {
 
         public TextBean() {
@@ -46,9 +45,10 @@ public class TextMsg extends BaseMsg{
         public TextBean(String content) {
             this.content = content;
         }
+
         /**
          * content : 你的快递已到，请携带工卡前往邮件中心领取。
-         出发前可查看<a href="http://work.weixin.qq.com">邮件中心视频实况</a>，聪明避开排队。
+         * 出发前可查看<a href="http://work.weixin.qq.com">邮件中心视频实况</a>，聪明避开排队。
          */
 
         private String content;

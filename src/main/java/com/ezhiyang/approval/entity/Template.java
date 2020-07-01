@@ -2,12 +2,13 @@ package com.ezhiyang.approval.entity;
 
 import java.time.LocalDateTime;
 import java.io.Serializable;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author Caixiaowei

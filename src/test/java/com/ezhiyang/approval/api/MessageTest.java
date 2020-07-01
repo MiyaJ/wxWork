@@ -44,7 +44,7 @@ public class MessageTest {
         textMsg.setTotag(StringUtils.EMPTY);
         textMsg.setMsgtype(MsgTypeEnum.TEXT.getValue());
         textMsg.setAgentid(1000002);
-        textMsg.setText(new TextMsg.TextBean("加薪~  "+ DateUtil.now() + "  \n<a href=\"https://www.baidu.com" +
+        textMsg.setText(new TextMsg.TextBean("加薪~  " + DateUtil.now() + "  \n<a href=\"https://www.baidu.com" +
                 ".com\">百度一下, 你就知道</a>"));
         textMsg.setSafe(0);
         textMsg.setEnable_id_trans(0);
@@ -110,28 +110,30 @@ public class MessageTest {
 
     /**
      * 创建群聊
+     *
+     * @param
+     * @return
      * @description
      * @author Caixiaowei
-     * @param
      * @updateTime 2020/6/28 15:42
-     * @return
      */
     @Test
-    public void test_createGroupChat(){
+    public void test_createGroupChat() {
         GroupChatCreateDTO dto = new GroupChatCreateDTO();
         dto.setName("测试群1");
         dto.setUserlist(Lists.newArrayList("cxw0615", "zcl0615"));
         String chatid = this.messageService.createGroupChat(dto);
         log.info("测试群1 : {}", chatid);
     }
-    
+
     /**
      * 发送群聊文本信息
-     * @description 
-     * @author Caixiaowei
+     *
      * @param
-     * @updateTime 2020/6/28 16:12 
-     * @return 
+     * @return
+     * @description
+     * @author Caixiaowei
+     * @updateTime 2020/6/28 16:12
      */
     @Test
     public void test_groupChat_text() {

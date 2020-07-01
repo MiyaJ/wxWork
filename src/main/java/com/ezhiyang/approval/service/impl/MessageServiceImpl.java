@@ -147,7 +147,7 @@ public class MessageServiceImpl extends WxWorkServiceImpl implements IMessageSer
     public String createGroupChat(GroupChatCreateDTO groupChatCreateDTO) {
         String url = "https://qyapi.weixin.qq.com/cgi-bin/appchat/create?access_token=" + getAccessToken();
         List<String> userlist = groupChatCreateDTO.getUserlist();
-        if (CollectionUtils.isEmpty(userlist) || userlist.size() <2) {
+        if (CollectionUtils.isEmpty(userlist) || userlist.size() < 2) {
             log.error("群聊成员补鞥呢少于2个");
             return StringUtils.EMPTY;
         }

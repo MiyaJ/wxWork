@@ -29,11 +29,12 @@ public class ApprovalTest {
 
     /**
      * 获取审批详情
+     *
+     * @param
+     * @return
      * @description
      * @author Caixiaowei
-     * @param
      * @updateTime 2020/6/24 15:25
-     * @return
      */
     @Test
     public void test_getAapprovalDetail() {
@@ -44,11 +45,12 @@ public class ApprovalTest {
 
     /**
      * 批量获取审批单号
+     *
+     * @param
+     * @return
      * @description
      * @author Caixiaowei
-     * @param
      * @updateTime 2020/6/24 15:59
-     * @return
      */
     @Test
     public void test_getApprovalInfo() {
