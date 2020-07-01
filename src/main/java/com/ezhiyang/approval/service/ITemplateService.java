@@ -16,6 +16,14 @@ import com.ezhiyang.approval.model.dto.TemplateDTO;
  */
 public interface ITemplateService extends IService<Template> {
 
+    /**
+     * 获取模板详情
+     * @description
+     * @author Caixiaowei
+     * @param templateId 模板id
+     * @updateTime 2020/6/29 13:54
+     * @return JSONObject 模板详情
+     */
     JSONObject getTemplateDetail(String templateId);
 
     Result addTemplate(TemplateDTO templateDTO);

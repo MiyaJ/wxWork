@@ -24,11 +24,12 @@ public interface IApprovalService {
     String getAccessToken();
 
     /**
-     * @title 审批申请
+     * 审批申请
      * @description
      * @author Caixiaowei
-     * @param
-     * @updateTime 2020/6/18 17:27
+     * @param params Map<String, Object> 申请内容, 详情见模板详情
+     * @updateTime 2020/6/29 13:56
+     * @return JSONObject
      */
     JSONObject applyEvent(Map<String, Object> params);
 
