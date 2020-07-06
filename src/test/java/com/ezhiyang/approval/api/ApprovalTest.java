@@ -3,6 +3,7 @@ package com.ezhiyang.approval.api;
 import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.ezhiyang.approval.service.IApprovalService;
+import com.ezhiyang.approval.service.ITemplateService;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,8 @@ public class ApprovalTest {
 
     @Autowired
     private IApprovalService approvalService;
+    @Autowired
+    private ITemplateService templateService;
 
 
     /**
@@ -38,7 +41,7 @@ public class ApprovalTest {
      */
     @Test
     public void test_getAapprovalDetail() {
-        String spNo = "202006180003";
+        String spNo = "202007060001";
         JSONObject approvalDetail = approvalService.getApprovalDetail(spNo);
         log.info("approvalDetail --->{}", approvalDetail.toJSONString());
     }
@@ -58,8 +61,23 @@ public class ApprovalTest {
         params.put("starttime", DateUtil.beginOfMonth(new Date()).getTime() / 1000);
         params.put("endtime", DateUtil.endOfMonth(new Date()).getTime() / 1000);
         params.put("cursor", 0);
-        params.put("size", 2);
+        params.put("size", 100);
         List<String> spNoList = approvalService.getApprovalInfo(params);
         log.info("审批单号 --->{}", spNoList);
+    }
+
+    /**
+     * 获取模板详情
+     * @description
+     * @author Caixiaowei
+     * @param
+     * @updateTime 2020/7/6 11:28
+     * @return 
+     */
+    @Test
+    public void test_getTemplate() {
+        String templateId = "Bs7wRUBt1HhUXNvP3hVCmxBUqZrEyo2XnLakE3XFJ";
+        JSONObject detail = templateService.getTemplateDetail(templateId);
+        log.info("template detail --->{}", detail.toJSONString());
     }
 }
