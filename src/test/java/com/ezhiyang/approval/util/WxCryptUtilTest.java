@@ -2,14 +2,13 @@ package com.ezhiyang.approval.util;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ezhiyang.approval.model.callback.approval.*;
+import com.ezhiyang.approval.model.callback.approval.third.*;
+import com.ezhiyang.approval.model.callback.approval.third.ApprovalInfo;
 import com.ezhiyang.approval.util.crypto.WxCryptUtil;
-import com.ezhiyang.approval.util.xml.XStreamTransformer;
 import com.thoughtworks.xstream.XStream;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.*;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -83,6 +82,70 @@ public class WxCryptUtilTest {
             "    </NotifyNodes> \n" +
             "    <approverstep>0</approverstep>  \n" +
             "  </ApprovalInfo> \n" +
+            "</xml>\n";
+
+    private String approvalMsg2 = "<xml>\n" +
+            "  <ToUserName><![CDATA[ww1cSD21f1e9c0caaa]]></ToUserName>\n" +
+            "  <FromUserName><![CDATA[sys]]></FromUserName>\n" +
+            "  <CreateTime>1571732272</CreateTime>\n" +
+            "  <MsgType><![CDATA[event]]></MsgType>\n" +
+            "  <Event><![CDATA[sys_approval_change]]></Event>\n" +
+            "  <AgentID>3010040</AgentID>\n" +
+            "  <ApprovalInfo>\n" +
+            "    <SpNo>201910220003</SpNo>\n" +
+            "    <SpName><![CDATA[示例模板]]></SpName>\n" +
+            "    <SpStatus>1</SpStatus>\n" +
+            "    <TemplateId><![CDATA[3TkaH5KFbrG9heEQWLJjhgpFwmqAFB4dLEnapaB7aaa]]></TemplateId>\n" +
+            "    <ApplyTime>1571728713</ApplyTime>\n" +
+            "    <Applyer>\n" +
+            "      <UserId><![CDATA[WuJunJie]]></UserId>\n" +
+            "      <Party><![CDATA[1]]></Party>\n" +
+            "    </Applyer>\n" +
+            "    <SpRecord>\n" +
+            "      <SpStatus>1</SpStatus>\n" +
+            "      <ApproverAttr>2</ApproverAttr>\n" +
+            "      <Details>\n" +
+            "        <Approver>\n" +
+            "          <UserId><![CDATA[WangXiaoMing]]></UserId>\n" +
+            "        </Approver>\n" +
+            "        <Speech><![CDATA[]]></Speech>\n" +
+            "        <SpStatus>1</SpStatus>\n" +
+            "        <SpTime>0</SpTime>\n" +
+            "      </Details>\n" +
+            "      <Details>\n" +
+            "        <Approver>\n" +
+            "          <UserId><![CDATA[XiaoGangHuang]]></UserId>\n" +
+            "        </Approver>\n" +
+            "        <Speech><![CDATA[]]></Speech>\n" +
+            "        <SpStatus>1</SpStatus>\n" +
+            "        <SpTime>0</SpTime>\n" +
+            "      </Details>\n" +
+            "    </SpRecord>\n" +
+            "    <SpRecord>\n" +
+            "      <SpStatus>1</SpStatus>\n" +
+            "      <ApproverAttr>1</ApproverAttr>\n" +
+            "      <Details>\n" +
+            "        <Approver>\n" +
+            "          <UserId><![CDATA[XiaoHongLiu]]></UserId>\n" +
+            "        </Approver>\n" +
+            "        <Speech><![CDATA[]]></Speech>\n" +
+            "        <SpStatus>1</SpStatus>\n" +
+            "        <SpTime>0</SpTime>\n" +
+            "      </Details>\n" +
+            "    </SpRecord>\n" +
+            "    <Notifyer>\n" +
+            "      <UserId><![CDATA[ChengLiang]]></UserId>\n" +
+            "    </Notifyer>\n" +
+            "    <Comments>\n" +
+            "      <CommentUserInfo>\n" +
+            "        <UserId><![CDATA[LiuZhi]]></UserId>\n" +
+            "      </CommentUserInfo>\n" +
+            "      <CommentTime>1571732272</CommentTime>\n" +
+            "      <CommentContent><![CDATA[这是一个备注]]></CommentContent>\n" +
+            "      <CommentId><![CDATA[6750538708562308220]]></CommentId>\n" +
+            "    </Comments>\n" +
+            "    <StatuChangeEvent>10</StatuChangeEvent>\n" +
+            "  </ApprovalInfo>\n" +
             "</xml>\n";
 
     public void testNormal() throws ParserConfigurationException, SAXException, IOException {
@@ -173,6 +236,37 @@ public class WxCryptUtilTest {
         AppravalCallbackMessage callbackMessage = (AppravalCallbackMessage) xstream.fromXML(approvalMsg);
 
         log.info("appravalCallbackMessage: {}", JSONObject.toJSONString(callbackMessage));
+    }
+
+
+    private String approvalMsg3 = "<xml>\n" +
+            "<SpRecord>\n" +
+            "<SpStatus>1</SpStatus>\n" +
+            "<ApproverAttr>2</ApproverAttr>\n" +
+            "</SpRecord>\n" +
+            "<SpRecord>\n" +
+            "<SpStatus>1</SpStatus>\n" +
+            "<ApproverAttr>1</ApproverAttr>\n" +
+            "</SpRecord>\n" +
+            "</xml>";
+
+    public void test_xml2() {
+        XStream xstream = new XStream();
+        xstream.processAnnotations(new Class[]{TestXml.class, SpRecord.class});
+        TestXml testXml = (TestXml) xstream.fromXML(approvalMsg3);
+
+        log.info("testXml: {}", JSONObject.toJSONString(testXml));
+    }
+
+    public void test_xml3() {
+        XStream xstream = new XStream();
+        xstream.processAnnotations(new Class[]{Applyer.class,
+                com.ezhiyang.approval.model.callback.approval.ApprovalInfo.class,
+                Comments.class, CommentUserInfo.class, Details.class, Notifyer.class,
+                com.ezhiyang.approval.model.callback.approval.SpRecord.class, ApprovalStatuChangeEvent.class});
+        ApprovalStatuChangeEvent testApprovalStatuChangeEvent = (ApprovalStatuChangeEvent) xstream.fromXML(approvalMsg2);
+
+        log.info("testXml: {}", JSONObject.toJSONString(testApprovalStatuChangeEvent));
     }
 
 }

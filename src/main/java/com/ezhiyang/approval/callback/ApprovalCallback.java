@@ -1,8 +1,9 @@
 package com.ezhiyang.approval.callback;
 
-import com.ezhiyang.approval.model.callback.approval.*;
+import com.ezhiyang.approval.model.callback.approval.third.*;
 import com.ezhiyang.approval.util.crypto.WxCryptUtil;
 import com.thoughtworks.xstream.XStream;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  * @createTime 2020年07月01日 09:43:00
  */
 @Controller
+@Slf4j
 public class ApprovalCallback {
 
     private String token;
@@ -38,6 +40,8 @@ public class ApprovalCallback {
             String msgXmlStr = wxCryptUtil.decrypt(msgSignature, timestamp, nonce, echostr);
             //必须要返回解密之后的明文
             response.getWriter().write(msgXmlStr);
+
+            log.info("msgXmlStr --->{}", msgXmlStr);
 
             XStream xstream = new XStream();
             //使用注解修改对象名称

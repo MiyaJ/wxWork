@@ -1,8 +1,7 @@
 package com.ezhiyang.approval.model.callback.approval;
 
-import com.ezhiyang.approval.util.xml.XStreamCDataConverter;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamConverter;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -10,90 +9,74 @@ import java.util.List;
 
 /**
  * @author Caixiaowei
- * @ClassName ApprovalInfo.java
- * @Description 审批信息
- * @createTime 2020年07月01日 12:29:00
+ * @ClassName ApprovalInfo2.java
+ * @Description 审批详情
+ * @createTime 2020年07月07日 16:17:00
  */
 @Data
 @XStreamAlias("ApprovalInfo")
 public class ApprovalInfo implements Serializable {
-    private static final long serialVersionUID = 2694470737773965218L;
+    private static final long serialVersionUID = -8756499340176598836L;
 
     /**
-     * 审批单编号，由开发者在发起申请时自定义
+     * 审批单号
      */
-    @XStreamAlias("ThirdNo")
-    private Long thirdNo;
+    @XStreamAlias("SpNo")
+    private String spNo;
+
 
     /**
-     * 审批模板名称
+     * 审批申请类型名称（审批模板名称）
      */
-    @XStreamAlias("OpenSpName")
-    @XStreamConverter(value = XStreamCDataConverter.class)
-    private String openSpName;
+    @XStreamAlias("SpName")
+    private String spName;
 
     /**
-     * 审批模板id
+     * 申请单状态：1-审批中；2-已通过；3-已驳回；4-已撤销；6-通过后撤销；7-已删除；10-已支付
      */
-    @XStreamAlias("OpenTemplateId")
-    @XStreamConverter(value = XStreamCDataConverter.class)
-    private String openTemplateId;
+    @XStreamAlias("SpStatus")
+    private Integer spStatus;
 
     /**
-     * 申请单当前审批状态：1-审批中；2-已通过；3-已驳回；4-已取消
+     * 审批模板id。可在“获取审批申请详情”、“审批状态变化回调通知”中获得，也可在审批模板的模板编辑页面链接中获得。
      */
-    @XStreamAlias("OpenSpStatus")
-    private Integer openSpStatus;
+    @XStreamAlias("TemplateId")
+    private String templateId;
 
     /**
-     * 提交申请时间, 时间戳 精确到秒
+     * 审批申请提交时间,Unix时间戳 10位
      */
     @XStreamAlias("ApplyTime")
-    private Long applyTime;
+    private Integer applyTime;
 
     /**
-     * 提交者姓名
+     *
      */
-    @XStreamAlias("ApplyUserName")
-    @XStreamConverter(value = XStreamCDataConverter.class)
-    private String applyUserName;
+    @XStreamAlias("Applyer")
+    private com.ezhiyang.approval.model.callback.approval.Applyer Applyer;
 
     /**
-     * 提交者userid
+     * 审批流程信息，可能有多个审批节点。
      */
-    @XStreamAlias("ApplyUserId")
-    @XStreamConverter(value = XStreamCDataConverter.class)
-    private String applyUserId;
+    @XStreamImplicit(itemFieldName="SpRecord")
+    private List<SpRecord> spRecord;
 
     /**
-     * 提交者所在部门
+     * 抄送信息，可能有多个抄送节点
      */
-    @XStreamAlias("ApplyUserParty")
-    @XStreamConverter(value = XStreamCDataConverter.class)
-    private String applyUserParty;
+    @XStreamImplicit(itemFieldName="Notifyer")
+    private List<Notifyer> notifyer;
 
     /**
-     * 提交者头像
+     * 审批申请备注信息，可能有多个备注节点
      */
-    @XStreamAlias("ApplyUserImage")
-    @XStreamConverter(value = XStreamCDataConverter.class)
-    private String applyUserImage;
+    @XStreamImplicit(itemFieldName="Comments")
+    private List<Comments> comments;
 
     /**
-     * 审批流程信息, 可以有多个审批节点
+     * 审批申请状态变化类型：1-提单；2-同意；3-驳回；4-转审；5-催办；6-撤销；8-通过后撤销；10-添加备注
      */
-    @XStreamAlias("ApprovalNodes")
-    List<ApprovalNode> approvalNodes;
+    @XStreamAlias("StatuChangeEvent")
+    private Integer statuChangeEvent;
 
-    /**
-     * 抄送信息，可能有多个抄送人
-     */
-    @XStreamAlias("NotifyNodes")
-    List<ApprovalNotifyNode> notifyNodes;
-
-    /**
-     * 当前审批节点：0-第一个审批节点；1-第二个审批节点…以此类推
-     */
-    @XStreamAlias("approverstep")
-    private Integer approverstep;
 }

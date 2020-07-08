@@ -1,4 +1,4 @@
-package com.ezhiyang.approval.model.callback.approval;
+package com.ezhiyang.approval.model.callback.approval.third;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;

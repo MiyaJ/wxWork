@@ -4,21 +4,19 @@ import com.ezhiyang.approval.util.xml.XStreamCDataConverter;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
 
 /**
  * @author Caixiaowei
- * @ClassName AppravalCallback.java
- * @Description 审批事件回调消息
- * @createTime 2020年07月01日 11:31:00
+ * @ClassName Xml.java
+ * @Description 审批申请状态变化回调通知
+ * @createTime 2020年07月08日 10:44:00
  */
 @Data
-@Slf4j
 @XStreamAlias("xml")
-public class AppravalCallbackMessage implements Serializable {
-    private static final long serialVersionUID = 4245680641277774844L;
+public class ApprovalStatuChangeEvent implements Serializable {
+    private static final long serialVersionUID = -3688915988159711276L;
 
     /**
      * 接收方企业Corpid

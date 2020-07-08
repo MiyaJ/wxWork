@@ -1,4 +1,4 @@
-package com.ezhiyang.approval.model.callback.approval;
+package com.ezhiyang.approval.model.callback.approval.third;
 
 import com.ezhiyang.approval.util.xml.XStreamCDataConverter;
 import com.thoughtworks.xstream.annotations.XStreamAlias;

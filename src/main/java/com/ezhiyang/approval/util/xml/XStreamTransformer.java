@@ -1,6 +1,6 @@
 package com.ezhiyang.approval.util.xml;
 
-import com.ezhiyang.approval.model.callback.approval.AppravalCallbackMessage;
+import com.ezhiyang.approval.model.callback.approval.third.AppravalCallbackMessage;
 import com.thoughtworks.xstream.XStream;
 
 import java.io.InputStream;
