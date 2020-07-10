@@ -1,9 +1,11 @@
 package com.ezhiyang.approval.model.callback.approval;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Caixiaowei
