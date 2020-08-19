@@ -3,14 +3,14 @@ server:
 
 spring:
   application:
-    name: approval
+    name: wxWork
   cloud:
     nacos:
       config:
         file-extension: yml
         namespace: 3d3ca54a-6f96-475e-b1b8-854521c766c8
-        server-addr: http://172.16.0.10:8848
+        server-addr: http://127.0.0.1:8848
 #        shared-configs: mysql.yml,redis.yml
       discovery:
         namespace: 3d3ca54a-6f96-475e-b1b8-854521c766c8
-        server-addr: http://172.16.0.10:8848
+        server-addr: http://127.0.0.1:8848
